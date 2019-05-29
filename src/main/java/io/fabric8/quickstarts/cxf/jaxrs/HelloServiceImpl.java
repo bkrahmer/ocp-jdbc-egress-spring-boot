@@ -42,7 +42,7 @@ public class HelloServiceImpl implements HelloService {
             }
 
         } catch (SQLException e) {
-            retval.append("Connection failure: " + e.getMessage());
+            retval.append("Connection failure: " + e.getMessage() + " " + e.getSQLState() + " " + e.getErrorCode());
         }
         return retval.toString();
     }
