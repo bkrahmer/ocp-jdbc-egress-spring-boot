@@ -1,0 +1,19 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    api.service.kubernetes.io/path: /services/helloservice/sayHello/
+  labels:
+    expose: "true"
+    app: spring-boot-cxf-jaxrs
+    provider: fabric8
+    version: 1.0-SNAPSHOT
+    group: io.fabric8.quickstarts.cxf.jaxrs
+  name: spring-boot-cxf-jaxrs
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: spring-boot-cxf-jaxrs
