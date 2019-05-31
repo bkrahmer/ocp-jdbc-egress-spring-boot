@@ -19,7 +19,7 @@ import io.swagger.annotations.Api;
 
 import java.sql.*;
 
-@Api("/testConnection")
+@Api("/ping")
 public class HelloServiceImpl implements HelloService {
 
     static {
@@ -30,7 +30,7 @@ public class HelloServiceImpl implements HelloService {
         }
     }
 
-    public String testConnection() {
+    public String ping() {
         StringBuilder retval = new StringBuilder();
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://support1.849d.internal:5432/testing", "admin", "testing")) {

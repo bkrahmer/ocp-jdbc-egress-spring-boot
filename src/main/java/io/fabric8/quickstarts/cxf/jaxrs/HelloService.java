@@ -23,13 +23,13 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Service;
  
-@Path("/testConnection")
+@Path("/ping")
 @Service
 public interface HelloService {
  
     @GET
     @Path("")
     @Produces(MediaType.TEXT_PLAIN)
-    String testConnection();
+    String ping();
     
 }
