@@ -16,13 +16,23 @@
 package io.fabric8.quickstarts.cxf.jaxrs;
 
 import io.swagger.annotations.Api;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 
 @Api("/ping")
 public class HelloServiceImpl implements HelloService {
 
+    private static final Logger logger = LoggerFactory.getLogger(HelloServiceImpl.class);
+    private static String databaseServer;
+
     static {
+        databaseServer = System.getenv("DB_SERVER");
+        if (StringUtils.isBlank(databaseServer)) {
+            logger.warn("DB_SERVER environment variable is not set");
+        }
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -33,7 +43,7 @@ public class HelloServiceImpl implements HelloService {
     public String ping() {
         StringBuilder retval = new StringBuilder();
         try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://support1.daf5.internal:5432/testing", "admin", "testing")) {
+                "jdbc:postgresql://" + databaseServer+ ":5432/testing", "admin", "testing")) {
             System.out.println("Connected to PostgreSQL database.\n");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM testtable");

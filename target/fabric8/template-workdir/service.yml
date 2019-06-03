@@ -1,7 +1,0 @@
-metadata:
-  annotations:
-    api.service.kubernetes.io/path: /services/testConnection
-spec:
-  ports:
-    - port: 80
-      targetPort: 8080
