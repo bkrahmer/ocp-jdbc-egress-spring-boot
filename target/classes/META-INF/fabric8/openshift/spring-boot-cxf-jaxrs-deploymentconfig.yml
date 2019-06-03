@@ -3,7 +3,9 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   annotations:
+    fabric8.io/git-commit: 3ce888e08119850e916cb435e7ec19de916c1813
     fabric8.io/iconUrl: img/icons/spring-boot.svg
+    fabric8.io/git-branch: master
     fabric8.io/metrics-path: dashboard/file/kubernetes-pods.json/?var-project=spring-boot-cxf-jaxrs&var-version=1.0-SNAPSHOT
   labels:
     app: spring-boot-cxf-jaxrs
@@ -25,7 +27,9 @@ spec:
   template:
     metadata:
       annotations:
+        fabric8.io/git-commit: 3ce888e08119850e916cb435e7ec19de916c1813
         fabric8.io/iconUrl: img/icons/spring-boot.svg
+        fabric8.io/git-branch: master
         fabric8.io/metrics-path: dashboard/file/kubernetes-pods.json/?var-project=spring-boot-cxf-jaxrs&var-version=1.0-SNAPSHOT
       labels:
         app: spring-boot-cxf-jaxrs

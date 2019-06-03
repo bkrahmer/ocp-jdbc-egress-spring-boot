@@ -33,7 +33,7 @@ public class HelloServiceImpl implements HelloService {
     public String ping() {
         StringBuilder retval = new StringBuilder();
         try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://support1.849d.internal:5432/testing", "admin", "testing")) {
+                "jdbc:postgresql://support1.daf5.internal:5432/testing", "admin", "testing")) {
             System.out.println("Connected to PostgreSQL database.\n");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM testtable");

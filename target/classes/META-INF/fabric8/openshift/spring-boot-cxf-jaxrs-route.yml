@@ -3,7 +3,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   annotations:
-    api.service.kubernetes.io/path: /services/helloservice/sayHello/
+    api.service.kubernetes.io/path: /services/testConnection
   labels:
     expose: "true"
     app: spring-boot-cxf-jaxrs
