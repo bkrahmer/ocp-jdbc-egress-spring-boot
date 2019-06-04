@@ -52,6 +52,7 @@ public class HelloServiceImpl implements HelloService {
         props.setProperty("password", "testing");
         props.setProperty("ssl", "true");
         props.setProperty("sslcert", "/tmp/client.crt");
+        props.setProperty("sslkey", "/tmp/client.key");
         props.setProperty("sslrootcert", "/tmp/root.crt");
         props.setProperty("sslpassword", "");
         try (Connection connection = DriverManager.getConnection(
