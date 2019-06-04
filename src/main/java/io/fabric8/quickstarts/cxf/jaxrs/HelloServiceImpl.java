@@ -53,6 +53,7 @@ public class HelloServiceImpl implements HelloService {
         props.setProperty("ssl", "true");
         props.setProperty("sslcert", "/tmp/client.crt");
         props.setProperty("sslrootcert", "/tmp/root.crt");
+        props.setProperty("sslpassword", "");
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://" + databaseServer+ ":5432/testing", props)) {
             System.out.println("Connected to PostgreSQL database.\n");
