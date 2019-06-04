@@ -20,15 +20,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.*;
+import java.util.Properties;
 
 @Api("/ping")
 public class HelloServiceImpl implements HelloService {
 
     private static final Logger logger = LoggerFactory.getLogger(HelloServiceImpl.class);
-    private static String databaseServer;
+    private String databaseServer;
 
-    static {
+    public HelloServiceImpl() {
         databaseServer = System.getenv("DB_SERVER");
         if (StringUtils.isBlank(databaseServer)) {
             logger.warn("DB_SERVER environment variable is not set");
@@ -38,12 +42,19 @@ public class HelloServiceImpl implements HelloService {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        extractResources();
     }
 
     public String ping() {
         StringBuilder retval = new StringBuilder();
+        Properties props = new Properties();
+        props.setProperty("user", "admin");
+        props.setProperty("password", "testing");
+        props.setProperty("ssl", "true");
+        props.setProperty("sslcert", "/tmp/client.crt");
+        props.setProperty("sslrootcert", "/tmp/root.crt");
         try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://" + databaseServer+ ":5432/testing", "admin", "testing")) {
+                "jdbc:postgresql://" + databaseServer+ ":5432/testing", props)) {
             System.out.println("Connected to PostgreSQL database.\n");
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM testtable");
@@ -55,6 +66,25 @@ public class HelloServiceImpl implements HelloService {
             retval.append("Connection failure: " + e.getMessage() + " " + e.getSQLState() + " " + e.getErrorCode());
         }
         return retval.toString();
+    }
+
+    private void extractResources() {
+        File sslCert = new File("/tmp/client.crt");
+        if (! sslCert.exists()) {
+            try {
+                Files.copy(this.getClass().getResourceAsStream("/client.crt"), sslCert.toPath());
+            } catch (IOException e) {
+                logger.warn("Caught exception extracting client certificate");
+            }
+        }
+        sslCert = new File("/tmp/root.crt");
+        if (! sslCert.exists()) {
+            try {
+                Files.copy(this.getClass().getResourceAsStream("/root.crt"), sslCert.toPath());
+            } catch (IOException e) {
+                logger.warn("Caught exception extracting root certificate");
+            }
+        }
     }
 
 }
