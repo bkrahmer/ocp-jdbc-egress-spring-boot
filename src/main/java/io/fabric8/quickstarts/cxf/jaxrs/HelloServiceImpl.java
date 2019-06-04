@@ -79,6 +79,14 @@ public class HelloServiceImpl implements HelloService {
                 logger.warn("Caught exception extracting client certificate");
             }
         }
+        sslCert = new File("/tmp/client.key");
+        if (! sslCert.exists()) {
+            try {
+                Files.copy(this.getClass().getResourceAsStream("/client.key"), sslCert.toPath());
+            } catch (IOException e) {
+                logger.warn("Caught exception extracting client key");
+            }
+        }
         sslCert = new File("/tmp/root.crt");
         if (! sslCert.exists()) {
             try {
