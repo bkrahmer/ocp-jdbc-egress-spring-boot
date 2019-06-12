@@ -43,7 +43,7 @@ public class HelloServiceImpl implements HelloService {
     public String ping() {
         StringBuilder retval = new StringBuilder();
         String url = "jdbc:postgresql://" + databaseServer+ ":5432/testing?loggerLevel=DEBUG";
-        retval.append("Attempting connection to: " + url);
+        retval.append("Attempting connection to: " + url + "\n");
         try (Connection connection = DriverManager.getConnection(url, "admin", "testing")) {
             System.out.println("Connected to PostgreSQL database.\n");
             Statement statement = connection.createStatement();
